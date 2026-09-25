@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -36,7 +36,7 @@ type RankedEntry = Entry & {
   voteCount: number;
 };
 
-export default function LeaderboardPage() {
+function LeaderboardContent() {
   const searchParams = useSearchParams();
   const challengeSlug = searchParams.get("challenge");
 
@@ -475,5 +475,24 @@ export default function LeaderboardPage() {
         </div>
       </footer>
     </main>
+  );
+}
+
+export default function LeaderboardPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-[#09051A] text-white">
+          <div className="text-center">
+            <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-white/10 border-t-purple-500" />
+            <p className="mt-5 text-gray-400">
+              Loading leaderboard...
+            </p>
+          </div>
+        </main>
+      }
+    >
+      <LeaderboardContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
@@ -1785,7 +1785,7 @@ function EmptyState({
   icon: string;
   title: string;
   text: string;
-  action?: React.ReactNode;
+  action?: ReactNode;
 }) {
   return (
     <div className="py-16 px-6 text-center">

@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic";
+
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -35,7 +37,7 @@ type Vote = {
   entry_id: string;
 };
 
-export default function ChallengePage() {
+function ChallengeContent() {
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
 
@@ -494,5 +496,24 @@ function InfoCard({
         {text}
       </p>
     </div>
+  );
+}
+
+export default function ChallengePage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-[#09051A] text-white">
+          <div className="text-center">
+            <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-white/10 border-t-pink-500" />
+            <p className="mt-5 text-gray-400">
+              Loading challenge...
+            </p>
+          </div>
+        </main>
+      }
+    >
+      <ChallengeContent />
+    </Suspense>
   );
 }
